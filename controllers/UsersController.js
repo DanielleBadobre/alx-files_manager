@@ -1,7 +1,7 @@
 import { ObjectID } from 'mongodb';
 
-const dbClient = require('../utils/db');
 const sha1 = require('sha1');
+const dbClient = require('../utils/db');
 const redisClient = require('../utils/redis');
 
 class UsersController {
@@ -9,13 +9,12 @@ class UsersController {
     const { email, password } = req.body;
 
     if (!password) {
-        return res.status(400).json({ error: 'Missing password' });
-      }
-    
+      return res.status(400).json({ error: 'Missing password' });
+    }
+
     if (!email) {
       return res.status(400).json({ error: 'Missing email' });
     }
-
 
     const userExists = await dbClient.db.collection('users').findOne({ email });
     if (userExists) {
